@@ -12,6 +12,7 @@
 		4AED76141CD377E900FFF144 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AED76121CD377E900FFF144 /* Main.storyboard */; };
 		4AED76161CD377E900FFF144 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4AED76151CD377E900FFF144 /* Assets.xcassets */; };
 		4AED76191CD377E900FFF144 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AED76171CD377E900FFF144 /* LaunchScreen.storyboard */; };
+		4AED76251CD380F500FFF144 /* pokemon.csv in Resources */ = {isa = PBXBuildFile; fileRef = 4AED76241CD380F500FFF144 /* pokemon.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		4AED76151CD377E900FFF144 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4AED76181CD377E900FFF144 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4AED761A1CD377E900FFF144 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AED76241CD380F500FFF144 /* pokemon.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = pokemon.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 			children = (
 				4AED760E1CD377E900FFF144 /* AppDelegate.swift */,
 				4AED761A1CD377E900FFF144 /* Info.plist */,
+				4AED76241CD380F500FFF144 /* pokemon.csv */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			files = (
 				4AED76191CD377E900FFF144 /* LaunchScreen.storyboard in Resources */,
 				4AED76161CD377E900FFF144 /* Assets.xcassets in Resources */,
+				4AED76251CD380F500FFF144 /* pokemon.csv in Resources */,
 				4AED76141CD377E900FFF144 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +322,7 @@
 				4AED761F1CD377E900FFF144 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
