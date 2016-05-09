@@ -10,14 +10,19 @@
 import UIKit
 import AVFoundation         //To play music
 
-class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UISearchBarDelegate {
     //CollectionViews need to implement three protocols: CVDataSource, CVDelegate, & CVDelegateFlowLayout
+    //SearchBar needs to implement one protocol: UISearchBarDelegate
     //In cellForItemAtIndexPath(), we create a new pokeman instance and configure the cell
     
     //**********IBOUTLETS & VARIABLES**********
     @IBOutlet weak var collection: UICollectionView!
-    var pokeman = [Pokeman]()
+    @IBOutlet weak var searchBar: UISearchBar!
+    var pokemon = [Pokemon]()
     var musicPlayer: AVAudioPlayer!
+    var inSearchMode = false
+    var filteredPokemon = [Pokemon]()
+    
     
     
     //**********IBACTIONS**********
@@ -37,6 +42,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         super.viewDidLoad()
         collection.dataSource = self
         collection.delegate = self
+        searchBar.delegate = self
+        searchBar.returnKeyType = UIReturnKeyType.Done          //Changes 'Search' button to 'Done'
         parsePokemonCSV()
         initAudio()
     }
@@ -51,8 +58,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             for row in rows {
                 let pokeId = Int(row["id"]!)!
                 let name = row["identifier"]!
-                let poke = Pokeman(name: name, pokedexID: pokeId)
-                pokeman.append(poke)
+                let poke = Pokemon(name: name, pokedexID: pokeId)
+                pokemon.append(poke)
             }
         }   catch let err as NSError {
             print(err.debugDescription)
@@ -79,12 +86,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 718
+        if inSearchMode {
+            return filteredPokemon.count
+        } else {
+            return pokemon.count
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PokeCell", forIndexPath: indexPath) as? PokeCell {
-            let poke = pokeman[indexPath.row]
+            let poke: Pokemon!
+            if inSearchMode {
+                poke = filteredPokemon[indexPath.row]
+            } else {
+                poke = pokemon[indexPath.row]
+            }
             cell.configureCell(poke)
             return cell
         } else {
@@ -97,5 +113,25 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    }
+    
+    
+    //**********UISearchBarDelegate PROTOCOL IMPLEMENTATION**********
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        //This will filter our pokemon array with the search bar text.  If it is not nil, it will add it to our filtered array
+        if searchBar.text == nil || searchBar.text == "" {
+            inSearchMode = false            //Turn off search mode
+            view.endEditing(true)           //Close the keyboard
+            collection.reloadData()         //Reload the data
+        } else {
+            inSearchMode = true
+            let lower = searchBar.text!.lowercaseString
+            filteredPokemon = pokemon.filter({$0.name.rangeOfString(lower) != nil})
+            collection.reloadData()      //Will refresh UICollectionView
+        }
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        view.endEditing(true)               //Closes the keyboard when search button on keyboard is clicked
     }
 }

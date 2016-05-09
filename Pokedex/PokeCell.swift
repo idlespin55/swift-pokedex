@@ -13,7 +13,7 @@ class PokeCell: UICollectionViewCell {
     //**********IBOutlets**********
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var thumbImg: UIImageView!
-    var pokeman: Pokeman!
+    var pokemon: Pokemon!
     
    
     //**********INITIALIZER**********
@@ -25,9 +25,9 @@ class PokeCell: UICollectionViewCell {
     
     
     //**********CONFIGURECELL()**********
-    func configureCell(pokeman: Pokeman) {
-        self.pokeman = pokeman
-        nameLbl.text = self.pokeman.name.capitalizedString
-        thumbImg.image = UIImage(named: "\(self.pokeman.pokedex)")
+    func configureCell(pokemon: Pokemon) {
+        self.pokemon = pokemon
+        nameLbl.text = self.pokemon.name.capitalizedString
+        thumbImg.image = UIImage(named: "\(self.pokemon.pokedex)")
     }
 }

@@ -1,19 +1,19 @@
 //
-//  Pokeman.swift
+//  Pokemon.swift
 //  Pokedex
 //
-//  Created by Ajmal Ahmady on 4/29/16.
+//  Created by Ajmal Ahmady on 5/9/16.
 //  Copyright © 2016 FrontierGroup. All rights reserved.
 //
 
 import Foundation
 
-class Pokeman {
+class Pokemon {
     
     //**********CLASS VARIABLES**********
     private var _name: String!
     private var _pokedexID: Int!
-
+    
     var name: String {
         return _name
     }
