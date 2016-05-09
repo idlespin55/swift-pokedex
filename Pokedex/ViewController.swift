@@ -14,10 +14,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //CollectionViews need to implement three protocols: CVDataSource, CVDelegate, & CVDelegateFlowLayout
     //SearchBar needs to implement one protocol: UISearchBarDelegate
     //In cellForItemAtIndexPath(), we create a new pokeman instance and configure the cell
+    //In the storyboard, connect the VC to the detailVC (i.e. not from the cell), as we manually call performSegueWithIdentifier
     
     //**********IBOUTLETS & VARIABLES**********
     @IBOutlet weak var collection: UICollectionView!
     @IBOutlet weak var searchBar: UISearchBar!
+    var poke: Pokemon!
     var pokemon = [Pokemon]()
     var musicPlayer: AVAudioPlayer!
     var inSearchMode = false
@@ -95,7 +97,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PokeCell", forIndexPath: indexPath) as? PokeCell {
-            let poke: Pokemon!
             if inSearchMode {
                 poke = filteredPokemon[indexPath.row]
             } else {
@@ -108,11 +109,29 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(105, 105)   //Returns the size of each cell
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if inSearchMode {
+            poke = filteredPokemon[indexPath.row]
+        } else {
+            poke = pokemon[indexPath.row]
+        }
+        performSegueWithIdentifier("PokemonDetailVC", sender: poke)
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        //Ensure we have the right segue, cast the destinationVC as a PokemonDetailVC,
+        //cast the sender (poke from cellForItemAtIndexPath), then send it to detailsVC
+        if segue.identifier == "PokemonDetailVC" {
+            if let detailsVC = segue.destinationViewController as? PokemonDetailVC {
+                if let poke = sender as? Pokemon {
+                    detailsVC.poke = poke
+                }
+            }
+        }
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        return CGSizeMake(105, 105)   //Returns the size of each cell
     }
     
     
