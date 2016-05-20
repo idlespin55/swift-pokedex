@@ -39,9 +39,15 @@ class Pokemon {
     }
     
     func downloadPokemonDetails(completed: DownloadComplete) {
+        let url = NSURL(string: _pokemonUrl)!
+        print(url)
+        print("1")
+
         Alamofire.request(.GET, url).responseJSON { response in
-            let result = response.result
-            print(result.value.debugDescription)
+            print(response.request)  // original URL request
+            print(response.response) // URL response
+            print(response.data)     // server data
+            print(response.result)   // result of response serialization
         }
     }
 }

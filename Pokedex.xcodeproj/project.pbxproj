@@ -109,7 +109,6 @@
 				4AED761A1CD377E900FFF144 /* Info.plist */,
 				4A6AF76F1CE04CBD00C9FBC4 /* csv.swift */,
 				4AED76241CD380F500FFF144 /* pokemon.csv */,
-				4AADA4A41CE493CF0092560D /* Constants.swift */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -140,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				4A6AF7751CE0AA7E00C9FBC4 /* Pokemon.swift */,
+				4AADA4A41CE493CF0092560D /* Constants.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
