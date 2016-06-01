@@ -29,8 +29,71 @@ class Pokemon {
         return _name
     }
     
-    var pokedex: Int {
+    var pokedexID: Int {
         return _pokedexID
+    }
+    
+    var description: String {
+        if _description == nil {
+            _description = ""
+        }
+        return _description
+    }
+    
+    var type: String {
+        if _type == nil {
+            _type = ""
+        }
+        return _type
+    }
+    
+    var defense: String {
+        if _defense == nil {
+            _defense = ""
+        }
+        return _defense
+    }
+    
+    var height: String {
+        if _height == nil {
+            _height = ""
+        }
+        return _height
+    }
+    
+    var weight: String {
+        if _weight == nil {
+            _weight = ""
+        }
+        return _weight
+    }
+    
+    var attack: String {
+        if _attack == nil {
+            _attack = ""
+        }
+        return _attack
+    }
+    
+    var nextEvolutionTxt: String {
+        if _nextEvolutionTxt == nil {
+            _nextEvolutionTxt = ""
+        }
+        return _nextEvolutionTxt
+    }
+    
+    var nextEvolutionID: String {
+        if _nextEvolutionId == nil {
+            _nextEvolutionId = ""
+        }
+        return _nextEvolutionId
+    }
+    
+    var nextEvolutionLvl: String {
+        if _nextEvolutionLvl == nil {
+            _nextEvolutionLvl = ""
+        }
+        return _nextEvolutionLvl
     }
     
     //**********INITIALIZER**********
@@ -40,6 +103,7 @@ class Pokemon {
         self._pokemonUrl = "\(URL_BASE)\(URL_POKEMON)\(self._pokedexID)/"
     }
     
+    //**********DOWNLOAD API FUNCTION**********
     func downloadPokemonDetails(completed: DownloadComplete) {
         let url = NSURL(string: _pokemonUrl)!
         
@@ -81,6 +145,8 @@ class Pokemon {
                     self._type = ""
                 }
                 print(self._type)
+                
+                //Download the description, which requires downloading from another website
                 if let descArr = dict["descriptions"] as? [Dictionary<String, String>] where descArr.count > 0 {
                     if let url = descArr[0]["resource_uri"] {
                         let nsurl = NSURL(string: "\(URL_BASE)\(url)")!
@@ -91,11 +157,14 @@ class Pokemon {
                                     print(self._description)
                                 }
                             }
+                            completed()
                         }
                     }
                 } else {
                     self._description = ""
                 }
+                
+                //Download the evolutions
                 if let evolution = dict["evolutions"] as? [Dictionary<String, AnyObject>] where evolution.count > 0 {
                     if let to = evolution[0]["to"] as? String {
                         //Can't support mega pokemon right now but api still has mega data
